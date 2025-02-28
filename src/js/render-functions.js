@@ -3,7 +3,6 @@ import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import fetchData from './pixabay-api';
-import pathImg from '../img/error-optimized.svg';
 
 export default function addMarkup(images) {
   const generalEl = document.querySelector('.gallery-list');
@@ -15,7 +14,8 @@ export default function addMarkup(images) {
       message: `Sorry, there are no images matching your search query. Please try again!`,
       position: 'topRight',
       maxWidth: '432px',
-      iconUrl: pathImg,
+      iconUrl: '../img/cancel-circle.svg',
+      iconColor: '#ffffff',
       messageColor: '#ffffff',
       backgroundColor: '#ef4040',
       messageSize: '16px',
@@ -96,7 +96,8 @@ form.addEventListener('submit', event => {
           message: `Sorry, there was an error fetching the images. Please try again!`,
           position: 'topRight',
           maxWidth: '432px',
-          iconUrl: pathImg,
+          iconUrl: '../img/cancel-circle.svg',
+          iconColor: '#ffffff',
           messageColor: '#ffffff',
           backgroundColor: '#ef4040',
           messageSize: '16px',
@@ -112,7 +113,8 @@ form.addEventListener('submit', event => {
       message: `Sorry, there was an error fetching the images. Please try again!`,
       position: 'topRight',
       maxWidth: '432px',
-      iconUrl: pathImg,
+      iconUrl: '../img/cancel-circle.svg',
+      iconColor: '#ffffff',
       messageColor: '#ffffff',
       backgroundColor: '#ef4040',
       messageSize: '16px',
