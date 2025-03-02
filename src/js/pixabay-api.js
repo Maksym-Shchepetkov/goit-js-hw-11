@@ -3,7 +3,7 @@ import axios from 'axios';
 export function fetchImages(searchByText) {
   const options = {
     params: {
-      key: '49096990-1cdaad3cdd2c2184e983643c5', // Ваш API ключ
+      key: '49096990-1cdaad3cdd2c2184e983643c5',
       q: searchByText,
       image_type: 'photo',
       orientation: 'horizontal',

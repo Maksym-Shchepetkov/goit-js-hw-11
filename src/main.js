@@ -7,14 +7,14 @@ import {
 } from './js/render-functions';
 
 const form = document.querySelector('.input-container');
-let searchQuery = ''; // Глобальна змінна для збереження запиту
+let searchQuery = '';
 
 function handleFormSubmit(event) {
   event.preventDefault();
   searchQuery = form.elements.search.value.trim();
 
   if (searchQuery) {
-    showLoader(); // Показати лоадер
+    showLoader();
     fetchImages(searchQuery)
       .then(response => {
         const images = response.data.hits;
@@ -23,7 +23,7 @@ function handleFormSubmit(event) {
             `Sorry, there are no images matching your search query. Please try again!`
           );
         } else {
-          addMarkup(images); // Додати зображення до галереї
+          addMarkup(images);
         }
       })
       .catch(error => {
@@ -32,8 +32,8 @@ function handleFormSubmit(event) {
         );
       })
       .finally(() => {
-        form.reset(); // Скидання форми
-        closeLoader(); // Приховати лоадер
+        form.reset();
+        closeLoader();
       });
   } else {
     showError(`Please enter a search query!`);
@@ -41,7 +41,7 @@ function handleFormSubmit(event) {
 }
 
 function init() {
-  form.addEventListener('submit', handleFormSubmit); // Додати обробник події
+  form.addEventListener('submit', handleFormSubmit);
 }
 
-init(); // Ініціалізувати програму
+init();

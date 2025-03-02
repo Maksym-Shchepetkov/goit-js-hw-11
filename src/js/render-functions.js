@@ -3,10 +3,8 @@ import pathIcon from '../img/error.svg';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-// Глобальний елемент галереї
 const galleryList = document.querySelector('.gallery-list');
 
-// Функція для відображення зображень у галереї
 export function addMarkup(images) {
   // Очищення галереї перед новим запитом
   galleryList.innerHTML = '';
@@ -54,26 +52,23 @@ export function addMarkup(images) {
     return galleryItem;
   });
 
-  galleryList.append(...galleryItems); // Додаємо нові елементи в список
+  galleryList.append(...galleryItems);
 
   const modal = new SimpleLightbox('.gallery-list a', {
     captionsData: 'alt',
     captionDelay: 250,
   });
-  modal.refresh(); // Оновлюємо модальні вікна
+  modal.refresh();
 }
 
-// Функція для відображення лоадера
 export function showLoader() {
   document.querySelector('.loader').classList.remove('hidden');
 }
 
-// Функція для приховування лоадера
 export function closeLoader() {
   document.querySelector('.loader').classList.add('hidden');
 }
 
-// Функція для відображення помилки
 export function showError(message) {
   iziToast.error({
     message: message,
