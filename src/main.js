@@ -4,6 +4,7 @@ import {
   showLoader,
   closeLoader,
   showError,
+  clearGallery,
 } from './js/render-functions';
 
 const form = document.querySelector('.input-container');
@@ -20,23 +21,26 @@ function handleFormSubmit(event) {
         const images = response.data.hits;
         if (images.length === 0) {
           showError(
-            `Sorry, there are no images matching your search query. Please try again!`
+            'Sorry, there are no images matching your search query. Please try again!'
           );
+          clearGallery();
         } else {
           addMarkup(images);
         }
       })
       .catch(error => {
         showError(
-          `Sorry, there was an error fetching the images. Please try again!`
+          'Sorry, there was an error fetching the images. Please try again!'
         );
+        clearGallery();
       })
       .finally(() => {
         form.reset();
         closeLoader();
       });
   } else {
-    showError(`Please enter a search query!`);
+    showError('Please enter a search query!');
+    clearGallery();
   }
 }
 

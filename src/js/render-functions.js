@@ -1,4 +1,5 @@
 import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 import pathIcon from '../img/error.svg';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -6,7 +7,6 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 const galleryList = document.querySelector('.gallery-list');
 
 export function addMarkup(images) {
-  // Очищення галереї перед новим запитом
   galleryList.innerHTML = '';
 
   const galleryItems = images.map(image => {
@@ -81,4 +81,9 @@ export function showError(message) {
     messageSize: '16px',
     messageLineHeight: '24px',
   });
+}
+
+export function clearGallery() {
+  const galleryList = document.querySelector('.gallery-list');
+  galleryList.innerHTML = '';
 }
