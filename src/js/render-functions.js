@@ -1,37 +1,23 @@
 import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
+import pathIcon from '../img/error.svg';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import fetchData from './pixabay-api';
-import pathIcon from '../img/error.svg';
 
-export default function addMarkup(images) {
-  const generalEl = document.querySelector('.gallery-list');
+// Глобальний елемент галереї
+const galleryList = document.querySelector('.gallery-list');
 
-  generalEl.innerHTML = '';
+// Функція для відображення зображень у галереї
+export function addMarkup(images) {
+  // Очищення галереї перед новим запитом
+  galleryList.innerHTML = '';
 
-  if (images.length === 0) {
-    iziToast.error({
-      message: `Sorry, there are no images matching your search query. Please try again!`,
-      position: 'topRight',
-      maxWidth: '432px',
-      iconUrl: pathIcon,
-      iconColor: '#ffffff',
-      messageColor: '#ffffff',
-      backgroundColor: '#ef4040',
-      messageSize: '16px',
-      messageLineHeight: '24px',
-    });
-    return;
-  }
+  const galleryItems = images.map(image => {
+    const galleryItem = document.createElement('li');
+    galleryItem.classList.add('gallery-item');
 
-  const galleryList = images.map(image => {
-    const galleryItems = document.createElement('li');
-    galleryItems.classList.add('gallery-item');
-
-    const galleryLinks = document.createElement('a');
-    galleryLinks.classList.add('gallery-link');
-    galleryLinks.href = image.largeImageURL;
+    const galleryLink = document.createElement('a');
+    galleryLink.classList.add('gallery-link');
+    galleryLink.href = image.largeImageURL;
 
     const galleryImg = document.createElement('img');
     galleryImg.classList.add('gallery-image');
@@ -61,75 +47,43 @@ export default function addMarkup(images) {
       infoContainer.append(infoParagraph);
     });
 
-    galleryItems.append(infoContainer);
+    galleryItem.append(infoContainer);
+    galleryLink.append(galleryImg);
+    galleryItem.append(galleryLink);
 
-    galleryItems.append(galleryLinks);
-
-    galleryLinks.append(galleryImg);
-    return galleryItems;
+    return galleryItem;
   });
-  generalEl.append(...galleryList);
+
+  galleryList.append(...galleryItems); // Додаємо нові елементи в список
 
   const modal = new SimpleLightbox('.gallery-list a', {
     captionsData: 'alt',
     captionDelay: 250,
   });
-
-  modal.refresh();
+  modal.refresh(); // Оновлюємо модальні вікна
 }
 
-const form = document.querySelector('.input-container');
-
-form.addEventListener('submit', event => {
-  event.preventDefault();
-  const searchQuery = form.elements.search.value.trim();
-
-  if (searchQuery) {
-    showLoader();
-
-    fetchData(searchQuery)
-      .then(response => {
-        const images = response.data.hits;
-        addMarkup(images);
-      })
-      .catch(error => {
-        iziToast.error({
-          message: `Sorry, there was an error fetching the images. Please try again!`,
-          position: 'topRight',
-          maxWidth: '432px',
-          iconUrl: pathIcon,
-          iconColor: '#ffffff',
-          messageColor: '#ffffff',
-          backgroundColor: '#ef4040',
-          messageSize: '16px',
-          messageLineHeight: '24px',
-        });
-      })
-      .finally(() => {
-        form.reset();
-        closeLoader();
-      });
-  } else {
-    iziToast.error({
-      message: `Sorry, there was an error fetching the images. Please try again!`,
-      position: 'topRight',
-      maxWidth: '432px',
-      iconUrl: pathIcon,
-      iconColor: '#ffffff',
-      messageColor: '#ffffff',
-      backgroundColor: '#ef4040',
-      messageSize: '16px',
-      messageLineHeight: '24px',
-    });
-  }
-});
-
-const loader = document.querySelector('.loader');
-
-function showLoader() {
-  loader.classList.remove('hidden');
+// Функція для відображення лоадера
+export function showLoader() {
+  document.querySelector('.loader').classList.remove('hidden');
 }
 
-function closeLoader() {
-  loader.classList.add('hidden');
+// Функція для приховування лоадера
+export function closeLoader() {
+  document.querySelector('.loader').classList.add('hidden');
+}
+
+// Функція для відображення помилки
+export function showError(message) {
+  iziToast.error({
+    message: message,
+    position: 'topRight',
+    maxWidth: '432px',
+    iconUrl: pathIcon,
+    iconColor: '#ffffff',
+    messageColor: '#ffffff',
+    backgroundColor: '#ef4040',
+    messageSize: '16px',
+    messageLineHeight: '24px',
+  });
 }
